@@ -1,0 +1,1 @@
+# Configure solrcloud using HDFS
