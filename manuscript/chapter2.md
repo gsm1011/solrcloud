@@ -92,10 +92,9 @@ standalone/
 `-- solr.xml
 ```
 
-<div class="alert alert-info">
+**Warning:**
 Done create file `core.properties`, it will be generated automatically,
 otherwise you will get an error saying that the core already exist. 
-</div>
 
 Now go to the [web UI](http://localhost:8983/solr), then click `Core Admin`
 on the left panel, next click the `Add Core` button on the top, enter the
@@ -104,9 +103,11 @@ default. The `Name` properties will be written to file `core.properties`
 under the `instanceDir` directory. By default you can use the same name for
 both values, but that's not required. For example, if you have a directory
 called `core1_inst` for core `core`, you can specify the `instanceDir`
-value to be ~`core1_inst` while the name to be `core1`.
+value to be `core1_inst` while the name to be `core1`.
 
-[[ Remember that, all those core instance directories should be located within `${solr_home}` directory. ]] 
+**Note:**
+Remember that, all those core instance directories should be located within
+`${solr_home}` directory. 
 
 If everything works fine so far, congrats, you just created your first
 solr core in solr standalone mode. Next, let's load some data into the
@@ -163,7 +164,7 @@ Response:
 }
 ```
 To confirm deletion, you can run the query again, it should give you output
-similar to the following, note that the value of `numFound` is 0. 
+similar to the following, note that the value of `numFound` is `0`. 
 
 ```
 {
