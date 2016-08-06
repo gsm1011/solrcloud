@@ -92,7 +92,10 @@ standalone/
 `-- solr.xml
 ```
 
-[[ Done create file `core.properties`, it will be created automatically, otherwise you will get an error saying that the core already exist.]]
+<div class="alert alert-info">
+Done create file `core.properties`, it will be generated automatically,
+otherwise you will get an error saying that the core already exist. 
+</div>
 
 Now go to the [web UI](http://localhost:8983/solr), then click `Core Admin`
 on the left panel, next click the `Add Core` button on the top, enter the
