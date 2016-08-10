@@ -211,11 +211,75 @@ collections directory etc.
 
 	[zk: localhost:2181(CONNECTED) 0] ls /configs
 	[gettingstarted]
+	[zk: localhost:2181(CONNECTED) 1] ls /live_nodes
+	[172.22.220.118:8983_solr, 172.22.220.118:7574_solr, 172.22.220.118:8985_solr]
 
-## Upload the `instanceDir` for creating solr `collection`
+The `/configs` directory contains the configurations for solr collections and
+cores. The `/collections` directory contains collections and cores. And the
+`/live_nodes` directory contains a list of nodes in the solr cluster as shown in
+the previous command. 
+
+Directory structure of a new solr node. 
+
+```
+node3
+`-- solr
+    |-- solr.xml
+	`-- zoo.cfg
+		
+1 directory, 2 files
+```
+
+## Upload a `config` for solr `collection`
 
 In solr standalone mode, we know that we need to tell solr where `solr_home` is
 when starting a solr instance, and all the cores on that solr instance will
 locate under the `solr_home` directory. But in solrcloud, the solr configuration
 files and collection metadata are stored in zookeeper, we need to upload the
 `config` directory before creating solr collections. 
+
+	$ ./server/scripts/cloud-scripts/zkcli.sh -zkhost localhost:2181 -cmd
+    upconfig -confdir solr/conf -confname conf1
+
+The command will upload the solr collection configuration files in `solr/conf`
+into zookeeper with name as conf1. We can verify this command with the
+`zkCli.sh` command.
+
+	[zk: localhost:2181(CONNECTED) 0] ls /configs
+	[conf1]
+	
+Now, if we create a new collection, we can use this configuration. For example,
+we can create a collection called `c1` with the following command. 
+
+	$ solr create_collection -c c1 -n conf1 -shards 2 -replicationFactor 2
+	
+The following command confirms that the collection has been created
+successfully. 
+
+	[zk: localhost:2181(CONNECTED) 2] ls /collections
+	[c1]
+	
+Alternatively, we can use the `zkcli.sh` to list the collections. 
+
+	$ zkcli.sh -zkhost localhost:2181 -cmd list
+	...
+	DATA:
+	    {"configName":"conf1"}
+	  /collections/c1/state.json (0)
+	   DATA:
+	        {"c1":{
+	             "replicationFactor":"2",
+	             "router":{"name":"compositeId"},
+	             "maxShardsPerNode":"2",
+	             "autoAddReplicas":"false",
+	             "shards":{
+	               "shard1":{
+	                  "range":"80000000-ffffffff",
+	                  "state":"active",
+	                  "replicas":{}},
+	               "shard2":{
+	                  "range":"0-7fffffff",
+	                  "state":"active",
+	                  "replicas":{}}}}}
+	...
+	
