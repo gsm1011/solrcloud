@@ -178,3 +178,18 @@ similar to the following, note that the value of `numFound` is `0`.
 			onse":{"numFound":0,"start":0,"docs":[] }}
 ```
 
+## Ingesting data from a file
+
+Sometimes, our data is preprocessed and stored in files, e.g. csv format. We
+might need to ingest all the data from the data file. In such case, we can still
+use the post utility to do the data ingestion. 
+
+Assume we have a data file `data.csv`, with each line as one record, and we use
+`|` as the delimiter, the following post command will ingest the data into an
+existing solr core `csv_core`: 
+
+	$ bin/post -c csv_core data.csv -params "separator=|&header=true" -type text/csv
+
+Note that in the command line, we configured `header=true`, so the first line of
+`data.csv` must be the field names that matches the schema of the core we are
+pushing data into. 
