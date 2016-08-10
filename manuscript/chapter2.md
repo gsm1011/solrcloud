@@ -140,9 +140,8 @@ you will see a number of options for a query. By default, it will `/select`
 all the documents from the core. By clicking the `Execute Query` at the
 bottom, you will be able to retrieve some documents you just posted. 
 
-After the query is executed, you will see a URL like
-`http://localhost:8983/solr/core1/select?indent=on&q=*:*&wt=json` on top of
-the result. Now, you can use curl to submit a query using this URL: 
+After the query is executed, you will see a URL on top of the result. Now, you
+can use curl to submit a query with this URL:
 
 	$ curl "http://localhost:8983/solr/core1/select?indent=on&q=*:*&wt=json"
 
