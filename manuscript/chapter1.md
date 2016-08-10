@@ -19,7 +19,7 @@ to your `.bashrc` file.
 	export SOLR_HOME=/usr/local/solr
 	export PATH=$PATH:${SOLR_HOME}/bin
 
-To test the installation, you can run the following command with normal 
+To test the installation, you can run the following command successfully.
 
 	$ solr version
 	6.1.0
